@@ -1,0 +1,4 @@
+{
+  "login": "登录",
+  "currentTime": "当前时间是{{time, YYYY-MM-DD}}"
+}

@@ -1,0 +1,27 @@
+.header{
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.main{
+  display: flex;
+  flex-wrap: wrap; /* 允许换行 */
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.card{
+  display: -webkit-box; /* 使用 flexbox 布局 */
+  -webkit-box-orient: vertical;
+  overflow: hidden; /* 溢出隐藏 */
+  cursor: pointer; /* 鼠标悬停时显示为手型 */
+  white-space: nowrap; /* 确保文本不换行 */
+  text-overflow: ellipsis; /* 溢出时显示省略号 */
+}
