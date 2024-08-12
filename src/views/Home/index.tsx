@@ -117,8 +117,8 @@ const Home = () => {
 			</div>
 			<div className="main">
 				<Row gutter={[16, 24]} justify={"start"}>
-					{cardList.map((card) => (
-						<Col xs={24} sm={12} md={8} lg={6} xl={4} xxl={3}>
+					{cardList.map((card, index) => (
+						<Col xs={24} sm={12} md={8} lg={6} xl={4} xxl={3} key={index}>
 							<Card
 								hoverable
 								cover={<img alt={card.title} src={card.imgSrc} />}
