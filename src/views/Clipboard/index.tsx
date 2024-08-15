@@ -1,46 +1,65 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import useClipboardApi from "@/api/modules/clipboard";
-import { CaretRightOutlined, SettingOutlined } from '@ant-design/icons';
-import { Card, Col, Collapse, message, Row} from "antd";
+import { CaretRightOutlined, SettingOutlined, DeleteOutlined, EditOutlined} from '@ant-design/icons';
+import {Button, Card, Col, Collapse, message, Modal, Row, Space} from "antd";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
+import './index.less'
+import {Entry, Category} from "@/types/entryInterfaces";
+import EditEntryModal from "@/views/Clipboard/EditEntryModal";
 
-// 定义数据结构
-interface Entry {
-	title: string;
-	content: string;
-	status: number;
-	category_id: number;
-	id: number;
-}
 
-interface Category {
+interface CategoryData {
 	name: string;
 	id: number;
 	entry_list: Entry[];
 	total: number;
+	isEdit: boolean;
 }
 
 interface ResponseData {
 	code: number;
 	total: number;
-	rows: Category[];
+	rows: CategoryData[];
 }
 
 const Clipboard = () => {
-	const { getEntryListWithCategory } = useClipboardApi();
+	const { getEntryListWithCategory, getCategoryList, deleteEntry } = useClipboardApi();
+	const [data, setData] = useState<ResponseData | null > (null);
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [currentEntryId, setCurrentEntryId] = useState<number | null>(null);
+	const [categoryList, setCategoryList] = useState<Category[]>([])
 
-	const [data, setData] = useState<ResponseData | null > (null)
+	const fetchData = async () => {
+		try {
+			const response = await getEntryListWithCategory();
+			setData(response);
+		} catch (error) {
+			setData(null);
+		}
+	};
+
+	const fetchCategoryList = async () => {
+		try {
+			const response = await getCategoryList();
+			setCategoryList(response);
+		} catch (error) {
+			console.error("Failed to fetch category list:", error);
+		}
+	};
+
 	useEffect(() => {
-		(async () => {
-			try {
-				const response = await getEntryListWithCategory()
-				// const response = await axiosInstance.get<ResponseData>('/api/v1/entry/by_category')
-				setData(response)
-			} catch (error) {
-				console.log('error', error)
-			}
-		})()
+		fetchData()
+		fetchCategoryList()
+		// (async () => {
+		// 	try {
+		// 		const response = await getEntryListWithCategory()
+		// 		// const response = await axiosInstance.get<ResponseData>('/api/v1/entry/by_category')
+		// 		setData(response)
+		// 	} catch (error) {
+		// 		console.log('error', error)
+		// 	}
+		// })()
 	}, [])
 
 	if (!data) {
@@ -55,17 +74,49 @@ const Clipboard = () => {
 		})
 	}
 
-	const genExtra = () => (
-		<div style={{display: "flex"}}>
-			<SettingOutlined
-				onClick={(event) => {
-					console.log('click')
-					event.stopPropagation()
-				}}
-			/>
 
-		</div>
-	)
+	// 点击类目编辑后 可以操作词条信息 （编辑、删除）
+	const toggleEdit = (categoryId: number) => {
+		setData(prevData => {
+			if(prevData) {
+				const newRows = prevData.rows.map(category => {
+					if(category.id === categoryId) {
+						return{
+							...category,
+							isEdit: !category.isEdit
+						}
+					}
+					return category
+				})
+				return {...prevData, rows: newRows}
+			}
+			return prevData
+		})
+	}
+
+	const genExtra = (category: CategoryData) => {
+		return (
+			<div style={{display: "flex"}}>
+				<Space>
+					<Button
+						type={"text"}
+						icon={<SettingOutlined />}
+						onClick={(event) => {
+							toggleEdit(category.id)
+							event.stopPropagation()
+						}}
+					></Button>
+					<Button
+						type={"text"}
+						icon={<DeleteOutlined />}
+						onClick={(event) => {
+							event.stopPropagation()
+						}}
+					></Button>
+				</Space>
+			</div>
+		)
+	}
 
 
 	const items = data.rows.map(category => ({
@@ -81,6 +132,13 @@ const Clipboard = () => {
 									type="inner"
 									hoverable
 									title={entry.title}
+									actions={category.isEdit ? [
+										<EditOutlined
+											key="edit"
+											onClick={() => showEditModal(entry.id)}
+										/>,
+										<DeleteOutlined key="delete" onClick={() => handleDeleteEntry(entry)} />,
+									] : []}
 								>
 									<CopyToClipboard
 										text={entry.content}
@@ -88,6 +146,7 @@ const Clipboard = () => {
 									>
 										<div style={{ cursor: 'pointer' }}>{entry.content}</div>
 									</CopyToClipboard>
+
 								</Card>
 							</Col>
 						))
@@ -97,18 +156,68 @@ const Clipboard = () => {
 				</Row>
 			</div>
 		),
-		extra: genExtra(),
+		extra: genExtra(category),
 	}));
+
+
+
+	const showEditModal = (entryId: number) => {
+		setCurrentEntryId(entryId);
+		setIsModalVisible(true);
+	};
+
+	const handleDeleteEntry = (entry: Entry) => {
+		Modal.confirm({
+			title: 'Delete',
+			content: `Delete entry ${entry.title} ?`,
+			okText: '确认',
+			cancelText: '取消',
+			onOk() {
+				return new Promise<void>((resolve, reject) => {
+					deleteEntry(entry.id).then(() => {
+						message.success(`Entry "${entry.title}" deleted successfully!`)
+						fetchData()
+						resolve()
+					}).catch(() => {
+						reject()
+					})
+				})
+			},
+		})
+	}
+
+	const closeModal = () => {
+		setIsModalVisible(false);
+		setCurrentEntryId(null); // 清除当前词条 ID
+	};
+
+	const handleEdit = () => {
+		fetchData(); // 关闭弹窗后刷新数据
+	};
 
 	return (
 		<>
 			<Collapse
+				className={"collapse-wrapper"}
 				bordered={false}
+				collapsible="icon"
 				defaultActiveKey={items.map(item => item.key)} // 可选：默认展开所有面板
-				expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-				expandIconPosition={'end'}
+				expandIcon={
+					({ isActive }) => <Button
+						type={"text"}
+						icon={<CaretRightOutlined rotate={isActive ? 90 : 0} />}
+					></Button>
+				}
 				items={items}
 				ghost
+				expandIconPosition={"end"}
+			></Collapse>
+			<EditEntryModal
+				visible={isModalVisible}
+				entryId={currentEntryId}
+				onClose={closeModal}
+				onEdit={handleEdit}
+				categoryList={categoryList}
 			/>
 		</>
 	)

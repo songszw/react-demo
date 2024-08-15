@@ -6,7 +6,7 @@ const useAxios = () => {
 	const request = async (config: any) => {
 		try {
 			const response = await axiosInstance(config)
-			if (response.data.code === 40013) {
+			if (response.data.code === 40103) {
 				localStorage.removeItem('token')
 				navigate('/login')
 				throw new Error('Token is invalid')
