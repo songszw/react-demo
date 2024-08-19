@@ -7,4 +7,24 @@
     font-weight: bold;
   }
 }
+  /* 新增 index.less */
+.my-masonry-grid {
+  display: flex;
+  width: 100%;
+  margin-left: -15px; /* gutter size offset */
+  .my-masonry-grid_column {
+    padding-left: 15px; /* gutter size */
+    background-clip: padding-box;
+  }
+}
 
+.my-masonry-grid_column > div { /* adjust this if your Card component is not `div` */
+  margin-bottom: 15px;
+}
+
+.my-masonry-item {
+  background: #eee;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px 0;
+}

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Button, Form, Input, message, Modal, Select, Space} from "antd";
+import {Button, Form, Input, message, Modal, Select, Space } from "antd";
 import useClipboardApi from "@/api/modules/clipboard";
 import {Entry, Category} from "@/types/entryInterfaces";
+import Overlay from "@/components/Overlay";
 
 
 interface EditEntryModalProps {
@@ -12,8 +13,6 @@ interface EditEntryModalProps {
 	categoryList: Category[];
 }
 
-
-
 const EditEntryModal: React.FC<EditEntryModalProps> = (
 	{
 		visible,
@@ -23,105 +22,88 @@ const EditEntryModal: React.FC<EditEntryModalProps> = (
 		categoryList
 	}
 ) => {
-	const { getEntryById, updateEntry } = useClipboardApi()
-	const [entry, setEntry] =  useState<Entry | null>(null)
+	const { getEntryById, updateEntry, addNewEntry } = useClipboardApi();
+	const [loading, setLoading] = useState(false);
+	const [form] = Form.useForm();
 	const fetchEntry = async () => {
 		if (entryId) {
+			setLoading(true)
 			const entry = await getEntryById(entryId)
-			setEntry(entry.data)
+			form.setFieldsValue(entry.data);
+			setLoading(false)
 		} else {
-			setEntry(null)
+			form.resetFields()
 		}
 	}
 
 	useEffect(() => {
-		if (entryId) {
+		if (visible && entryId) {
 			fetchEntry()
 		}
 
 	}, [visible, entryId])
 
-	if(!entry) {
-		return null
-	}
 
 	const onFinish = async (values: Entry) => {
+		setLoading(true)
 		try {
 			if (entryId) {
-
-				console.log('values', values)
-				console.log('entry',  entry)
-				values.id = entryId
+				values.id = entryId;
 				await updateEntry(values);
-				message.open({
-					type: 'success',
-					content: 'success'
-				})
-				onEdit();
-				onClose();
+			} else {
+				await addNewEntry(values)
 			}
+			message.open({type: 'success', content: 'success'})
+			onEdit();
+			handleCloseClick();
 		} catch (e) {
 			console.log('error', e)
+		} finally {
+			setLoading(false)
 		}
 	}
 
+	const handleCloseClick = () => {
+		form.resetFields();
+		onClose()
+	}
+
 	return (
-		<Modal
-			title={"Edit Entry"}
-			open={visible}
-			onCancel={onClose}
-			footer={false}
-			maskClosable={false}
-			// footer={[
-			// 	<Button key={'cancel'} onClick={onClose}>Cancel</Button>,
-			// 	<Button key={"submit"} type={"primary"} onClick={handleSubmit}>Save</Button>
-			// ]}
-		>
-			<Form
-				onFinish={onFinish}
-				layout={"vertical"}
-				initialValues={entry || {'title': '', content: ''}}
-			>
-				<Form.Item
-					label={"title"}
-					name={"title"}
-					rules={[
-						{required: true, message: "Please input the title"}
-					]}
+		<>
+			<Modal title={"Edit Entry"} open={visible} onCancel={handleCloseClick} footer={false} maskClosable={false}>
+				<Overlay loading={loading} />
+				<Form
+					form={form}
+					onFinish={onFinish}
+					layout={"vertical"}
+					initialValues={{'title': '', content: '', category_id: null}}
 				>
-					<Input />
-				</Form.Item>
-				<Form.Item
-					label={"Content"}
-					name={"content"}
-					rules={[{required: true, message: "Please input your content"}]}
-				>
-					<Input.TextArea rows={4} />
-				</Form.Item>
-				<Form.Item
-					label={"Category"}
-					name={"category_id"}
-					rules={[{required: true, message: "Please select a category"}]}
-				>
-					<Select
-						placeholder={"Select a category"}
+					<Form.Item label={"title"} name={"title"} rules={[{required: true, message: "Please input the title"}]}>
+						<Input />
+					</Form.Item>
+					<Form.Item label={"Content"} name={"content"} rules={[{required: true, message: "Please input your content"}]}>
+						<Input.TextArea rows={4} />
+					</Form.Item>
+					<Form.Item
+						label={"Category"}
+						name={"category_id"}
+						rules={[{required: true, message: "Please select a category"}]}
 					>
-						{categoryList.map(category => (
-							<Select.Option key={category.id} value={category.id}>
-								{category.name}
-							</Select.Option>
-						))}
-					</Select>
-				</Form.Item>
-				<Form.Item style={{display: "flex",  justifyContent: "end"}}>
-					<Space>
-						<Button key={'cancel'} onClick={onClose}>Cancel</Button>
-						<Button key={"submit"} type={"primary"} htmlType="submit">Save</Button>
-						{/*<Button key={"submit"} type={"primary"} onClick={handleSubmit}>Save</Button>*/}
-					</Space>
-				</Form.Item>
-			</Form>
-		</Modal>
+						<Select placeholder={"Select a category"}>
+							{categoryList.map(category => (
+								<Select.Option key={category.id} value={category.id}>{category.name}</Select.Option>
+							))}
+						</Select>
+					</Form.Item>
+					<Form.Item style={{display: "flex",  justifyContent: "end"}}>
+						<Space>
+							<Button key={'cancel'} onClick={handleCloseClick}>Cancel</Button>
+							<Button key={"submit"} type={"primary"} htmlType="submit" >Save</Button>
+						</Space>
+					</Form.Item>
+				</Form>
+			</Modal>
+		</>
 	)
 }
 

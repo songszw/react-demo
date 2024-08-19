@@ -1,12 +1,17 @@
-import { useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import useClipboardApi from "@/api/modules/clipboard";
-import { CaretRightOutlined, SettingOutlined, DeleteOutlined, EditOutlined} from '@ant-design/icons';
-import {Button, Card, Col, Collapse, message, Modal, Row, Space} from "antd";
+import {
+	CaretRightOutlined, SettingOutlined, DeleteOutlined, EditOutlined, PlusOutlined, BorderInnerOutlined
+} from '@ant-design/icons';
+import {Button, Card, Collapse, message, Modal, Space } from "antd";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import Masonry from "react-masonry-css";
 
 import './index.less'
 import {Entry, Category} from "@/types/entryInterfaces";
 import EditEntryModal from "@/views/Clipboard/EditEntryModal";
+import EditCategoryModal from "@/views/Clipboard/EditCategoryModal";
+import FloatingActionButton from "@/components/FloatingActionButton";
 
 
 interface CategoryData {
@@ -23,12 +28,15 @@ interface ResponseData {
 	rows: CategoryData[];
 }
 
-const Clipboard = () => {
-	const { getEntryListWithCategory, getCategoryList, deleteEntry } = useClipboardApi();
+const Clipboard: React.FC = () => {
+	const { getEntryListWithCategory, getCategoryList, deleteEntry, deleteCategory } = useClipboardApi();
 	const [data, setData] = useState<ResponseData | null > (null);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [currentEntryId, setCurrentEntryId] = useState<number | null>(null);
-	const [categoryList, setCategoryList] = useState<Category[]>([])
+	const [categoryList, setCategoryList] = useState<Category[]>([]);
+
+	const [categoryId, setCategoryId] = useState<number | null>(null);
+	const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false)
 
 	const fetchData = async () => {
 		try {
@@ -42,7 +50,7 @@ const Clipboard = () => {
 	const fetchCategoryList = async () => {
 		try {
 			const response = await getCategoryList();
-			setCategoryList(response);
+			setCategoryList(response.rows);
 		} catch (error) {
 			console.error("Failed to fetch category list:", error);
 		}
@@ -51,15 +59,6 @@ const Clipboard = () => {
 	useEffect(() => {
 		fetchData()
 		fetchCategoryList()
-		// (async () => {
-		// 	try {
-		// 		const response = await getEntryListWithCategory()
-		// 		// const response = await axiosInstance.get<ResponseData>('/api/v1/entry/by_category')
-		// 		setData(response)
-		// 	} catch (error) {
-		// 		console.log('error', error)
-		// 	}
-		// })()
 	}, [])
 
 	if (!data) {
@@ -68,10 +67,7 @@ const Clipboard = () => {
 
 
 	const success = () => {
-		message.open({
-			type: 'success',
-			content: 'copy success'
-		})
+		message.success('copy success')
 	}
 
 
@@ -79,18 +75,32 @@ const Clipboard = () => {
 	const toggleEdit = (categoryId: number) => {
 		setData(prevData => {
 			if(prevData) {
-				const newRows = prevData.rows.map(category => {
-					if(category.id === categoryId) {
-						return{
-							...category,
-							isEdit: !category.isEdit
-						}
-					}
-					return category
-				})
+				const newRows = prevData.rows.map(category => ({
+					...category,
+					isEdit: category.id === categoryId ? !category.isEdit : category.isEdit,
+				}))
 				return {...prevData, rows: newRows}
 			}
 			return prevData
+		})
+	}
+
+	const handleDeleteCategory = (category: CategoryData) => {
+		Modal.confirm({
+			title: 'Delete',
+			content: `Delete entry ${category.name} ?`,
+			okText: '确认',
+			cancelText: '取消',
+			onOk: async () => {
+				if(category.entry_list.length) {
+					message.error(`Can not delete Category "${category.name}" with entry`)
+					return
+				}
+				deleteCategory(category.id).then(() => {
+					message.success(`Category "${category.name}" deleted successfully!`);
+					fetchData();
+				}).catch(() => {})
+			},
 		})
 	}
 
@@ -102,7 +112,16 @@ const Clipboard = () => {
 						type={"text"}
 						icon={<SettingOutlined />}
 						onClick={(event) => {
-							toggleEdit(category.id)
+							toggleEdit(category.id);
+							event.stopPropagation();
+						}}
+					></Button>
+					<Button
+						type={"text"}
+						icon={<EditOutlined />}
+						onClick={(event) => {
+							setCategoryId(category.id)
+							setIsCategoryModalVisible(true)
 							event.stopPropagation()
 						}}
 					></Button>
@@ -110,7 +129,8 @@ const Clipboard = () => {
 						type={"text"}
 						icon={<DeleteOutlined />}
 						onClick={(event) => {
-							event.stopPropagation()
+							handleDeleteCategory(category);
+							event.stopPropagation();
 						}}
 					></Button>
 				</Space>
@@ -118,16 +138,29 @@ const Clipboard = () => {
 		)
 	}
 
+	const breakpointColumnsObj = {
+		default: 7,
+		2000: 6,
+		1700: 5,
+		1400: 4,
+		1100: 3,
+		800: 2,
+		500: 1
+	};
 
 	const items = data.rows.map(category => ({
 		key: category.id,
 		label: category.name,
 		children: (
-			<div style={{display: "flex", flexWrap: "wrap"}}>
-				<Row gutter={[16, 24]} justify={"start"} style={{width: "100%"}}>
+			<div style={{ display: "flex" }}>
+				<Masonry
+					breakpointCols={breakpointColumnsObj}
+					className="my-masonry-grid"
+					columnClassName="my-masonry-grid_column"
+				>
 					{category.entry_list.length > 0 ? (
 						category.entry_list.map(entry => (
-							<Col xs={24} sm={12} md={8} xl={4} xxl={3} key={entry.id}>
+							<div key={entry.id}>
 								<Card
 									type="inner"
 									hoverable
@@ -146,14 +179,13 @@ const Clipboard = () => {
 									>
 										<div style={{ cursor: 'pointer' }}>{entry.content}</div>
 									</CopyToClipboard>
-
 								</Card>
-							</Col>
+							</div>
 						))
 					) : (
 						<p>No entries available</p>
 					)}
-				</Row>
+				</Masonry>
 			</div>
 		),
 		extra: genExtra(category),
@@ -195,6 +227,11 @@ const Clipboard = () => {
 		fetchData(); // 关闭弹窗后刷新数据
 	};
 
+	const closeCategoryModal = () => {
+		setIsCategoryModalVisible(false);
+		setCategoryId(null);
+	}
+
 	return (
 		<>
 			<Collapse
@@ -219,6 +256,32 @@ const Clipboard = () => {
 				onEdit={handleEdit}
 				categoryList={categoryList}
 			/>
+			<EditCategoryModal
+				visible={isCategoryModalVisible}
+				categoryId={categoryId}
+				onClose={closeCategoryModal}
+				onEdit={handleEdit}
+			></EditCategoryModal>
+
+
+			<FloatingActionButton
+				additionalButtons={[
+					{
+						name: '新增词条',
+						icon: <PlusOutlined />,
+						onClick: () => {
+							setIsModalVisible(true)
+						}
+					},
+					{
+						name: '新增类目',
+						icon: <BorderInnerOutlined />,
+						onClick: () => {
+							setIsCategoryModalVisible(true)
+						}
+					}
+				]}
+			></FloatingActionButton>
 		</>
 	)
 }
