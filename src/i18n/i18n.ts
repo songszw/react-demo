@@ -14,6 +14,10 @@ i18n
 		interpolation: {
 			escapeValue: false
 		},
+		detection: {
+			order: ['localStorage', 'cookie', 'sessionStorage', 'navigator'],
+			caches: ['localStorage', 'cookie']
+		}
 	} as InitOptions)
 
 i18n.services.formatter?.add('DD/MM/YYYY', (value) => {

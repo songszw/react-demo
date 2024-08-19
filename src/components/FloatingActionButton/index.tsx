@@ -1,6 +1,7 @@
 import {FloatButton, Tooltip} from "antd";
 import {ArrowUpOutlined, HomeOutlined, SlackOutlined} from "@ant-design/icons";
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 interface AdditionalButton {
 	icon: React.ReactNode;
@@ -13,6 +14,7 @@ interface FloatingActionButtonProps {
 }
 
 const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({additionalButtons = []}) => {
+	const { t } = useTranslation();
 	return (
 		<FloatButton.Group trigger={"click"} icon={<SlackOutlined />}>
 			{additionalButtons.map( (button, index) => (
@@ -20,10 +22,10 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({additionalBu
 					<FloatButton key={index} icon={button.icon} onClick={button.onClick}></FloatButton>
 				</Tooltip>
 			))}
-			<Tooltip title={"回到顶部"} color={'rgb(129, 216, 208)'} key={"ToTop"} placement={"left"}>
+			<Tooltip title={t('text.toTop')} color={'rgb(129, 216, 208)'} key={"ToTop"} placement={"left"}>
 				<FloatButton icon={<ArrowUpOutlined />} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} />
 			</Tooltip>
-			<Tooltip title={"回到首页"} color={'rgb(129, 216, 208)'} key={"ToHome"} placement={"left"}>
+			<Tooltip title={t('text.toHome')} color={'rgb(129, 216, 208)'} key={"ToHome"} placement={"left"}>
 				<FloatButton icon={<HomeOutlined />} onClick={() => window.location.href = '/'} />
 			</Tooltip>
 		</FloatButton.Group>

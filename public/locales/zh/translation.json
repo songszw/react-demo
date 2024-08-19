@@ -1,4 +1,42 @@
 {
   "login": "登录",
-  "currentTime": "当前时间是{{time, YYYY-MM-DD}}"
+  "logout": "退出",
+  "currentTime": "当前时间是{{time, YYYY-MM-DD}}",
+  "form": {
+    "username": "用户名",
+    "usernameMessage": "请输入用户名!",
+    "password": "密码",
+    "passwordMessage": "请输入密码！",
+    "category": "类目",
+    "categoryName": "类目名称",
+    "categoryMessage": "请输入类目",
+    "title": "标题",
+    "entry": "词条",
+    "content": "内容",
+    "entryTitleMessage": "请输入词条标题",
+    "entryContentMessage": "请输入词条内容",
+    "selectCategory": "请选择类目"
+  },
+  "text": {
+    "addEntry": "新增词条",
+    "editEntry": "编辑词条",
+    "addCategory": "新增类目",
+    "editCategory": "编辑类目",
+    "toTop": "回到顶部",
+    "toHome": "回到首页",
+    "delete": "删除"
+  },
+  "button": {
+    "cancel": "取消",
+    "submit": "提交",
+    "save": "保存",
+    "confirm": "确定"
+  },
+  "message": {
+    "deleteEntryMessage": "删除词条 {{title}} ?",
+    "deleteCategoryMessage": "删除类目 {{title}} ?",
+    "deleteCategoryError_Entry": "该类目 {{title}} 下有词条， 无法删除类目 ",
+    "success": "操作成功",
+    "copySuccess": "复制成功"
+  }
 }

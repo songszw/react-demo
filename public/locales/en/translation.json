@@ -1,4 +1,42 @@
 {
-  "login": "login1",
-  "currentTime": "Current time is {{time, DD/MM/YYYY}}"
+  "login": "Login",
+  "currentTime": "Current time is {{time, DD/MM/YYYY}}",
+  "logout": "Logout",
+  "form": {
+    "username": "username",
+    "usernameMessage": "Please input your username!",
+    "password": "password",
+    "passwordMessage": "Please input your password!",
+    "category": "Category",
+    "categoryName": "Category Name",
+    "categoryMessage": "Please input category name",
+    "title": "Title",
+    "entry": "Entry",
+    "content": "Content",
+    "entryTitleMessage": "Please input entry title",
+    "entryContentMessage": "Please input entry content",
+    "selectCategory": "Please select category"
+  },
+  "": {
+    "addEntry": "Add Entry",
+    "editEntry": "Edit Entry",
+    "addCategory": "Add Category",
+    "editCategory": "Edit Category",
+    "toTop": "To Top",
+    "toHome": "To Home",
+    "delete": "Delete"
+  },
+  "button": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "save": "Save",
+    "confirm": "Confirm"
+  },
+  "message": {
+    "deleteEntryMessage": "Delete entry {{title}} ?",
+    "deleteCategoryMessage": "Delete Category {{title}} ?",
+    "deleteCategoryError_Entry": "Can not delete Category {{title}} with entry",
+    "success": "Success",
+    "copySuccess": "copy success"
+  }
 }

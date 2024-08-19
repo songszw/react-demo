@@ -12,6 +12,7 @@ import {Entry, Category} from "@/types/entryInterfaces";
 import EditEntryModal from "@/views/Clipboard/EditEntryModal";
 import EditCategoryModal from "@/views/Clipboard/EditCategoryModal";
 import FloatingActionButton from "@/components/FloatingActionButton";
+import {useTranslation} from "react-i18next";
 
 
 interface CategoryData {
@@ -37,6 +38,8 @@ const Clipboard: React.FC = () => {
 
 	const [categoryId, setCategoryId] = useState<number | null>(null);
 	const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false)
+
+	const { t } = useTranslation();
 
 	const fetchData = async () => {
 		try {
@@ -67,7 +70,7 @@ const Clipboard: React.FC = () => {
 
 
 	const success = () => {
-		message.success('copy success')
+		message.success(t('message.copySuccess'))
 	}
 
 
@@ -87,17 +90,17 @@ const Clipboard: React.FC = () => {
 
 	const handleDeleteCategory = (category: CategoryData) => {
 		Modal.confirm({
-			title: 'Delete',
-			content: `Delete entry ${category.name} ?`,
-			okText: '确认',
-			cancelText: '取消',
+			title: t('text.delete'),
+			content: t('message.deleteCategoryMessage', {title: category.name}),
+			okText: t('button.confirm'),
+			cancelText: t('button.cancel'),
 			onOk: async () => {
 				if(category.entry_list.length) {
-					message.error(`Can not delete Category "${category.name}" with entry`)
+					message.error(t('message.deleteCategoryError_Entry', {title: category.name}))
 					return
 				}
 				deleteCategory(category.id).then(() => {
-					message.success(`Category "${category.name}" deleted successfully!`);
+					message.success(t('message.success'));
 					fetchData();
 				}).catch(() => {})
 			},
@@ -200,10 +203,10 @@ const Clipboard: React.FC = () => {
 
 	const handleDeleteEntry = (entry: Entry) => {
 		Modal.confirm({
-			title: 'Delete',
-			content: `Delete entry ${entry.title} ?`,
-			okText: '确认',
-			cancelText: '取消',
+			title: t('text.delete'),
+			content: t('message.deleteEntryMessage', {title: entry.title}),
+			okText: t('button.confirm'),
+			cancelText: t('button.cancel'),
 			onOk() {
 				return new Promise<void>((resolve, reject) => {
 					deleteEntry(entry.id).then(() => {
@@ -267,14 +270,14 @@ const Clipboard: React.FC = () => {
 			<FloatingActionButton
 				additionalButtons={[
 					{
-						name: '新增词条',
+						name: t('text.addEntry'),
 						icon: <PlusOutlined />,
 						onClick: () => {
 							setIsModalVisible(true)
 						}
 					},
 					{
-						name: '新增类目',
+						name: t('text.addCategory'),
 						icon: <BorderInnerOutlined />,
 						onClick: () => {
 							setIsCategoryModalVisible(true)

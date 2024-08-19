@@ -5,7 +5,8 @@ import title_img from '@/assets/img.png';
 import {useNavigate} from "react-router-dom";
 
 const Home = () => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+
 	const cardList = [
 		{
 			title: 'Todo List',
