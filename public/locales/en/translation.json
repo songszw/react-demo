@@ -1,5 +1,6 @@
 {
   "login": "Login",
+  "register": "Register",
   "currentTime": "Current time is {{time, DD/MM/YYYY}}",
   "logout": "Logout",
   "form": {
@@ -15,16 +16,22 @@
     "content": "Content",
     "entryTitleMessage": "Please input entry title",
     "entryContentMessage": "Please input entry content",
-    "selectCategory": "Please select category"
+    "selectCategory": "Please select category",
+    "rePassword": "Confirm Password",
+    "rePasswordMessage": "Please input your password again",
+    "email": "Email",
+    "emailMessage": "Please input your email!",
+    "emailValidate": "The input is not valid E-mail!"
   },
-  "": {
+  "text": {
     "addEntry": "Add Entry",
     "editEntry": "Edit Entry",
     "addCategory": "Add Category",
     "editCategory": "Edit Category",
     "toTop": "To Top",
     "toHome": "To Home",
-    "delete": "Delete"
+    "delete": "Delete",
+    "hasAccount": "Have account? click "
   },
   "button": {
     "cancel": "Cancel",
@@ -37,6 +44,8 @@
     "deleteCategoryMessage": "Delete Category {{title}} ?",
     "deleteCategoryError_Entry": "Can not delete Category {{title}} with entry",
     "success": "Success",
-    "copySuccess": "copy success"
+    "copySuccess": "copy success",
+    "passwordNotMatch": "Passwords do not match!",
+    "registerSuccess": "Register success!"
   }
 }

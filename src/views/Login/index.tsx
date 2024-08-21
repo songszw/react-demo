@@ -34,13 +34,8 @@ const Login = () => {
 
 	return (
 		<div className="login-container">
-			<h2>Login</h2>
-			<Form
-				name="login"
-				onFinish={onFinish}
-				layout="vertical"
-				style={{ maxWidth: 400, margin: '0 auto' }}
-			>
+			<h2>{t('login')}</h2>
+			<Form name="login" onFinish={onFinish} layout="vertical" style={{ width: 400, margin: '0 auto' }}>
 				{/*<Form.Item*/}
 				{/*	label="Email"*/}
 				{/*	name="email"*/}
@@ -69,6 +64,7 @@ const Login = () => {
 				</Form.Item>
 				<Form.Item>
 					<Button type="primary" htmlType="submit" block >{t('login')}</Button>
+					<a href="/register">{t('register')}</a>
 				</Form.Item>
 			</Form>
 		</div>

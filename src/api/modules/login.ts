@@ -5,6 +5,12 @@ interface LoginData {
 	password: string
 }
 
+interface RegisterData {
+	username: string;
+	password: string;
+	email: string;
+}
+
 const useLoginApi = () => {
 	const {request} = useAxios()
 
@@ -16,7 +22,17 @@ const useLoginApi = () => {
 		})
 		return response
 	}
-	return {login}
+
+	const register = async (data: RegisterData) => {
+		const response = await request({
+			method: "POST",
+			url: "/api/v1/user/register",
+			data: data
+		})
+		return response
+	}
+
+	return {login, register}
 }
 
 export default useLoginApi;

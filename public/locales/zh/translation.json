@@ -1,5 +1,6 @@
 {
   "login": "登录",
+  "register": "注册",
   "logout": "退出",
   "currentTime": "当前时间是{{time, YYYY-MM-DD}}",
   "form": {
@@ -15,7 +16,12 @@
     "content": "内容",
     "entryTitleMessage": "请输入词条标题",
     "entryContentMessage": "请输入词条内容",
-    "selectCategory": "请选择类目"
+    "selectCategory": "请选择类目",
+    "rePassword": "确认密码",
+    "rePasswordMessage": "请确认密码",
+    "email": "邮箱",
+    "emailMessage": "请输入邮箱",
+    "emailValidate": "请输入正确的邮箱格式"
   },
   "text": {
     "addEntry": "新增词条",
@@ -24,7 +30,8 @@
     "editCategory": "编辑类目",
     "toTop": "回到顶部",
     "toHome": "回到首页",
-    "delete": "删除"
+    "delete": "删除",
+    "hasAccount": "已有账号？点击 "
   },
   "button": {
     "cancel": "取消",
@@ -37,6 +44,8 @@
     "deleteCategoryMessage": "删除类目 {{title}} ?",
     "deleteCategoryError_Entry": "该类目 {{title}} 下有词条， 无法删除类目 ",
     "success": "操作成功",
-    "copySuccess": "复制成功"
+    "copySuccess": "复制成功",
+    "passwordNotMatch": "两次密码不一致",
+    "registerSuccess": "注册成功"
   }
 }

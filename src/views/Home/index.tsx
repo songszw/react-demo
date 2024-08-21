@@ -26,54 +26,6 @@ const Home = () => {
 			imgSrc: title_img,
 			router: 'binPacking'
 		},
-		{
-			title: 'Clipboard',
-			description: 'This is a clipboard',
-			imgSrc: title_img,
-			router: 'clipboard'
-		},
-		{
-			title: 'Clipboard',
-			description: 'This is a clipboard',
-			imgSrc: title_img,
-			router: 'clipboard'
-		},
-		{
-			title: 'Clipboard',
-			description: 'This is a clipboard',
-			imgSrc: title_img,
-			router: 'clipboard'
-		},
-		{
-			title: 'Clipboard',
-			description: 'This is a clipboard',
-			imgSrc: title_img,
-			router: 'clipboard'
-		},
-		{
-			title: 'Clipboard',
-			description: 'This is a clipb oardc lipboa rdclip board clipb oard',
-			imgSrc: title_img,
-			router: 'clipboard'
-		},
-		{
-			title: 'Clipboard',
-			description: 'This is a clipboard',
-			imgSrc: title_img,
-			router: 'clipboard'
-		},
-		{
-			title: 'Todo List with a really really long title that should be truncated',
-			description: 'This is a todo list with a description that is also very long and should be displayed with an ellipsis if it is too long.',
-			imgSrc: title_img,
-			router: 'clipboard'
-		},
-		{
-			title: 'Clipboard',
-			description: 'This is a clipboardclipboardclipboard',
-			imgSrc: title_img,
-			router: 'clipboard'
-		}
 	]
 
 	const handleCardClick = (router: string) => {
