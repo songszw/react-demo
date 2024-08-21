@@ -11,6 +11,11 @@ interface RegisterData {
 	email: string;
 }
 
+interface changPasswordData {
+	current_password: string;
+	new_password: string
+}
+
 const useLoginApi = () => {
 	const {request} = useAxios()
 
@@ -32,7 +37,16 @@ const useLoginApi = () => {
 		return response
 	}
 
-	return {login, register}
+	const changePassword = async (data: changPasswordData) => {
+		const response = await request({
+			method: 'PUT',
+			url: "/api/v1/user/password",
+			data: data
+		})
+		return response
+	}
+
+	return { login, register, changePassword }
 }
 
 export default useLoginApi;

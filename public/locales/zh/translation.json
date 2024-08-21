@@ -21,7 +21,10 @@
     "rePasswordMessage": "请确认密码",
     "email": "邮箱",
     "emailMessage": "请输入邮箱",
-    "emailValidate": "请输入正确的邮箱格式"
+    "emailValidate": "请输入正确的邮箱格式",
+    "currentPassword": "当前密码",
+    "newPassword": "新密码"
+
   },
   "text": {
     "addEntry": "新增词条",
@@ -31,7 +34,8 @@
     "toTop": "回到顶部",
     "toHome": "回到首页",
     "delete": "删除",
-    "hasAccount": "已有账号？点击 "
+    "hasAccount": "已有账号？点击 ",
+    "changePassword": "修改密码"
   },
   "button": {
     "cancel": "取消",
@@ -46,6 +50,17 @@
     "success": "操作成功",
     "copySuccess": "复制成功",
     "passwordNotMatch": "两次密码不一致",
-    "registerSuccess": "注册成功"
+    "registerSuccess": "注册成功",
+    "INCORRECT_USERNAME_OR_PASSWORD": "用户名或密码错误",
+    "EMAIL_ALREADY_EXISTS": "邮箱已存在",
+    "USERNAME_ALREADY_EXISTS": "用户名已存在",
+    "USER_NOT_FOUND": "用户名不存在",
+    "CURRENT_PASSWORD_IS_INCORRECT": "密码错误",
+    "ENTRY_NOT_FOUND": "词条未找到",
+    "CATEGORY_DELETE_ERROR": "类目删除异常",
+    "CATEGORY_NOT_FOUND": "类目未找到",
+    "CATEGORY_ALREADY_EXISTS": "类目未找到"
+
+
   }
 }

@@ -21,7 +21,9 @@
     "rePasswordMessage": "Please input your password again",
     "email": "Email",
     "emailMessage": "Please input your email!",
-    "emailValidate": "The input is not valid E-mail!"
+    "emailValidate": "The input is not valid E-mail!",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password"
   },
   "text": {
     "addEntry": "Add Entry",
@@ -31,7 +33,8 @@
     "toTop": "To Top",
     "toHome": "To Home",
     "delete": "Delete",
-    "hasAccount": "Have account? click "
+    "hasAccount": "Have account? click ",
+    "changePassword": "change password"
   },
   "button": {
     "cancel": "Cancel",
@@ -46,6 +49,16 @@
     "success": "Success",
     "copySuccess": "copy success",
     "passwordNotMatch": "Passwords do not match!",
-    "registerSuccess": "Register success!"
+    "registerSuccess": "Register success!",
+    "INCORRECT_USERNAME_OR_PASSWORD": "Incorrect username or password",
+    "EMAIL_ALREADY_EXISTS": "Email already exists",
+    "USERNAME_ALREADY_EXISTS": "Username already exists",
+    "USER_NOT_FOUND": "User not found",
+    "CURRENT_PASSWORD_IS_INCORRECT": "Current password is incorrect",
+    "ENTRY_NOT_FOUND": "Entry not found",
+    "CATEGORY_DELETE_ERROR": "Category delete error",
+    "CATEGORY_NOT_FOUND": "Category not found",
+    "CATEGORY_ALREADY_EXISTS": "Category already exists"
+
   }
 }

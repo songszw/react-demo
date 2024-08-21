@@ -1,9 +1,11 @@
 import {useNavigate} from "react-router-dom";
 import axiosInstance from "@/api/axiosInstance";
 import {message} from "antd";
+import {useTranslation} from "react-i18next";
 
 const useAxios = () => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+	const { t } = useTranslation();
 	const request = async (config: any) => {
 		try {
 			const response = await axiosInstance(config)
@@ -24,7 +26,7 @@ const useAxios = () => {
 			} else if(error.response && error.response.data.detail) {
 				message.error(error.response.data.detail);
 			} else if (error.message) {
-				message.error(error.message);
+				message.error(t(`message.${error.message}`));
 			} else {
 				message.error('请求失败，未知错误');
 			}

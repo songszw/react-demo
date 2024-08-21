@@ -4,6 +4,7 @@ import {Button, Dropdown, MenuProps} from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import {Suspense, useEffect, useState} from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import ChangePasswordModal from "@/views/Layout/ChangePasswordModal";
 import './index.less'
 
 // const lngs: {
@@ -23,6 +24,7 @@ const Layout = () => {
 	const { t, i18n } = useTranslation();
 	const navigate = useNavigate();
 	const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+	const [isModalVisible, setIsModalVisible] = useState(false)
 
 	const handleLogoutClick = () => {
 		localStorage.removeItem('token')
@@ -38,7 +40,6 @@ const Layout = () => {
 	}, [])
 
 	const onClick: MenuProps['onClick'] = ({ key }) => {
-		console.log('dsafdsafdas', key)
 		i18n.changeLanguage(key)
 	};
 
@@ -53,6 +54,22 @@ const Layout = () => {
 			key: 'zh'
 		}
 	]
+
+	const userInfoClick: MenuProps['onClick'] = ({key}) => {
+		console.log('djshj', key)
+		setIsModalVisible(true)
+	}
+
+	const userInfoItems: MenuProps['items'] = [
+		{
+			label: t('text.changePassword'),
+			key: 'password'
+		}
+	]
+
+	const closeModal = () => {
+		setIsModalVisible(false)
+	}
 
 
 	return (
@@ -75,7 +92,10 @@ const Layout = () => {
 					<Dropdown menu={{items, onClick }} trigger={['click']}>
 						<Button type={"text"} icon={<GlobalOutlined />} onClick={e => e.preventDefault()} />
 					</Dropdown>
-					<span>{userInfo ? userInfo.username : ''}</span>
+					<Dropdown menu={{items: userInfoItems, onClick: userInfoClick}} trigger={['click']}>
+						<Button type={"text"} onClick={e => e.preventDefault()}>{userInfo ? userInfo.username : ""}</Button>
+					</Dropdown>
+					{/*<span>{userInfo ? userInfo.username : ''}</span>*/}
 					{/*<p>{t('currentTime', {time: dayjs('2033-4-21').format("MM/DD/YYYY")})}</p>*/}
 					<Button type={"text"} onClick={handleLogoutClick}>{userInfo ? t('logout') : t("login")}</Button>
 				</div>
@@ -87,6 +107,7 @@ const Layout = () => {
 					</Suspense>
 				</section>
 			</main>
+			<ChangePasswordModal visible={isModalVisible} onClose={closeModal}></ChangePasswordModal>
 
 		</>
 	)
