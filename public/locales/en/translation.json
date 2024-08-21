@@ -34,7 +34,8 @@
     "toHome": "To Home",
     "delete": "Delete",
     "hasAccount": "Have account? click ",
-    "changePassword": "change password"
+    "changePassword": "change password",
+    "categoryIsEmpty": "Category is empty, please add a category first"
   },
   "button": {
     "cancel": "Cancel",

@@ -35,7 +35,8 @@
     "toHome": "回到首页",
     "delete": "删除",
     "hasAccount": "已有账号？点击 ",
-    "changePassword": "修改密码"
+    "changePassword": "修改密码",
+    "categoryIsEmpty": "类目为空，请先添加类目"
   },
   "button": {
     "cancel": "取消",

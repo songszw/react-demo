@@ -99,6 +99,9 @@ const EditEntryModal: React.FC<EditEntryModalProps> = (
 							{categoryList.map(category => (
 								<Select.Option key={category.id} value={category.id}>{category.name}</Select.Option>
 							))}
+							{!categoryList.length && (
+								<Select.Option key={'default'} disabled>{t('text.categoryIsEmpty')}</Select.Option>
+							)}
 						</Select>
 					</Form.Item>
 					<Form.Item style={{display: "flex",  justifyContent: "end"}}>
