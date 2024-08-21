@@ -2,6 +2,8 @@ import { Card, Col, Row, Tooltip} from "antd";
 
 import './index.less'
 import title_img from '@/assets/img.png';
+import todo_img from '@/assets/todolist.png'
+import clipboard_img from "@/assets/clipboard.png"
 import {useNavigate} from "react-router-dom";
 
 const Home = () => {
@@ -11,13 +13,13 @@ const Home = () => {
 		{
 			title: 'Todo List',
 			description: 'This is a todo list',
-			imgSrc: title_img,
+			imgSrc: todo_img,
 			router: 'todolist'
 		},
 		{
 			title: 'Clipboard',
 			description: 'This is a clipboard',
-			imgSrc: title_img,
+			imgSrc: clipboard_img,
 			router: 'clipboard'
 		},
 		{

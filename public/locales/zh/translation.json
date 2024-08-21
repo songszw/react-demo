@@ -60,8 +60,10 @@
     "ENTRY_NOT_FOUND": "词条未找到",
     "CATEGORY_DELETE_ERROR": "类目删除异常",
     "CATEGORY_NOT_FOUND": "类目未找到",
-    "CATEGORY_ALREADY_EXISTS": "类目未找到"
-
+    "CATEGORY_ALREADY_EXISTS": "类目未找到",
+    "USERNAME_NOT_EXIST": "用户名不存在",
+    "TOKEN_HAS_EXPIRED": "token已过期",
+    "TOKEN_VALIDATION_ERROR": "token验证失败"
 
   }
 }

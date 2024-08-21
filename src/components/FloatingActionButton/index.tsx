@@ -16,7 +16,7 @@ interface FloatingActionButtonProps {
 const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({additionalButtons = []}) => {
 	const { t } = useTranslation();
 	return (
-		<FloatButton.Group trigger={"click"} icon={<SlackOutlined />}>
+		<FloatButton.Group trigger={"click"} icon={<SlackOutlined  style={{color: 'rgb(129, 216, 208)'}}/>}>
 			{additionalButtons.map( (button, index) => (
 				<Tooltip title={button.name} color={'rgb(129, 216, 208)'} key={index} placement={"left"}>
 					<FloatButton key={index} icon={button.icon} onClick={button.onClick}></FloatButton>

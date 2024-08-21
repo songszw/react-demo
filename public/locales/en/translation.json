@@ -59,7 +59,9 @@
     "ENTRY_NOT_FOUND": "Entry not found",
     "CATEGORY_DELETE_ERROR": "Category delete error",
     "CATEGORY_NOT_FOUND": "Category not found",
-    "CATEGORY_ALREADY_EXISTS": "Category already exists"
-
+    "CATEGORY_ALREADY_EXISTS": "Category already exists",
+    "USERNAME_NOT_EXIST": "Username not exist",
+    "TOKEN_HAS_EXPIRED": "Token has expired",
+    "TOKEN_VALIDATION_ERROR": "Token validation error"
   }
 }
