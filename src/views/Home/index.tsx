@@ -26,7 +26,7 @@ const Home = () => {
 			title: '二维不规则装箱',
 			description: 'This is a Bin-packing problem ',
 			imgSrc: title_img,
-			router: 'binPacking'
+			router: 'packing'
 		},
 	]
 

@@ -228,6 +228,7 @@ const Clipboard: React.FC = () => {
 
 	const handleEdit = () => {
 		fetchData(); // 关闭弹窗后刷新数据
+		fetchCategoryList()
 	};
 
 	const closeCategoryModal = () => {

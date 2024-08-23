@@ -9,6 +9,7 @@ const Manage = lazy(() => import('@/views/Manage'));
 const TodoList =  lazy(() => import("@/views/TodoList"));
 const Layout = lazy(() => import("@/views/Layout"));
 const Clipboard =  lazy(() => import("@/views/Clipboard"));
+const Packing = lazy(() => import("@/views/Packing"))
 const ProtectedRoute = ({element} : {element: JSX.Element}) => {
 	const isAuthenticated = Boolean(localStorage.getItem('token'))
 	const tokenExpireTime = localStorage.getItem('token_expire_time')
@@ -40,6 +41,10 @@ const routers = [
 			{
 				path: '/clipboard',
 				element: <ProtectedRoute element={<Clipboard />} />,
+			},
+			{
+				path: '/packing',
+				element: <ProtectedRoute element={<Packing />} />
 			}
 		]
 	},
