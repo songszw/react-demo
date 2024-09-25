@@ -4,6 +4,8 @@ import './index.less'
 import title_img from '@/assets/img.png';
 import todo_img from '@/assets/todolist.png'
 import clipboard_img from "@/assets/clipboard.png"
+import barcode_img from '@/assets/qr.png'
+import password_img from '@/assets/password.png'
 import {useNavigate} from "react-router-dom";
 
 const Home = () => {
@@ -27,6 +29,18 @@ const Home = () => {
 			description: 'This is a Bin-packing problem ',
 			imgSrc: title_img,
 			router: 'packing'
+		},
+		{
+			title: '条形码生成器',
+			description: 'Barcode/QRCode tools ',
+			imgSrc: barcode_img,
+			router: 'barcode'
+		},
+		{
+			title: '密码生成器',
+			description: 'Create your password',
+			imgSrc: password_img,
+			router: 'password'
 		},
 	]
 

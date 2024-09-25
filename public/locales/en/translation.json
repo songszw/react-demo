@@ -23,7 +23,12 @@
     "emailMessage": "Please input your email!",
     "emailValidate": "The input is not valid E-mail!",
     "currentPassword": "Current Password",
-    "newPassword": "New Password"
+    "newPassword": "New Password",
+    "website": "website",
+    "websiteMessage": "Please input website",
+    "salt": "salt",
+    "saltMessage": "Please input salt",
+    "symbol": "symbol"
   },
   "text": {
     "addEntry": "Add Entry",

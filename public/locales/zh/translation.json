@@ -23,8 +23,12 @@
     "emailMessage": "请输入邮箱",
     "emailValidate": "请输入正确的邮箱格式",
     "currentPassword": "当前密码",
-    "newPassword": "新密码"
-
+    "newPassword": "新密码",
+    "website": "网址",
+    "websiteMessage": "请输入网址",
+    "salt": "盐值",
+    "saltMessage": "请输入盐值",
+    "symbol": "特殊符号"
   },
   "text": {
     "addEntry": "新增词条",
