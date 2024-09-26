@@ -28,6 +28,8 @@
     "websiteMessage": "请输入网址",
     "salt": "盐值",
     "saltMessage": "请输入盐值",
+    "key": "密钥",
+    "keyMessage": "请输入密钥",
     "symbol": "特殊符号"
   },
   "text": {

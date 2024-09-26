@@ -28,6 +28,8 @@
     "websiteMessage": "Please input website",
     "salt": "salt",
     "saltMessage": "Please input salt",
+    "key": "key",
+    "keyMessage": "Please input key",
     "symbol": "symbol"
   },
   "text": {
