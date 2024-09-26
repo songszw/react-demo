@@ -65,7 +65,7 @@ const Password: React.FC = () => {
 			salt: '',
 			symbol: true,
 			inputType: 'password',
-			password: '123'
+			password: ''
 		},
 		{
 			title: '网易云音乐',
